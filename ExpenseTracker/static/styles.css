@@ -1,0 +1,67 @@
+:root{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --muted:#9aa6b2;
+  --accent:#1f7a8c;
+  --accent-2:#6dd3c5;
+  --glass: rgba(255,255,255,0.03);
+  --danger:#ff6b6b;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--bg),#071021);
+  color:#e6eef3;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding:24px;
+}
+.container{
+  max-width:1000px;
+  margin:12px auto;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:18px;
+}
+header{display:flex;align-items:center;justify-content:space-between}
+h1{margin:0;font-size:1.6rem}
+.sub{margin:0;color:var(--muted);font-size:0.9rem}
+main{display:grid;grid-template-columns:1fr 1.2fr;gap:18px}
+.card{
+  background:var(--card);
+  padding:18px;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(2,6,23,0.6);
+}
+.form label{display:block;margin-bottom:12px;font-size:0.95rem}
+.form input[type="text"],.form input[type="number"],.form select{
+  width:100%;
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.04);
+  background:var(--glass);
+  color:inherit;
+  outline:none;
+}
+.actions{display:flex;justify-content:flex-end}
+.btn{
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  border:0;padding:10px 14px;border-radius:8px;color:#042023;font-weight:700;cursor:pointer;
+}
+.btn-small{padding:6px 8px;font-size:0.85rem;border-radius:6px}
+.btn-danger{background:var(--danger);color:#fff}
+.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:12px}
+.summary-item{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;display:flex;justify-content:space-between;align-items:center}
+.label{color:var(--muted);font-size:0.85rem}
+.value{font-weight:700}
+.cat-list{list-style:none;padding:0;margin:0 0 12px 0}
+.cat-list li{display:flex;justify-content:space-between;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.01);margin-bottom:8px}
+.recent{width:100%;border-collapse:collapse;font-size:0.95rem}
+.recent th{ text-align:left;color:var(--muted);padding:8px 10px}
+.recent td{padding:8px 10px;border-top:1px solid rgba(255,255,255,0.02)}
+footer{text-align:center;color:var(--muted);margin-top:6px;font-size:0.85rem}
+@media (max-width:900px){
+  main{grid-template-columns:1fr; }
+}

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Expense Tracker</h1>
+      <p class="sub">• Track Your Expenses •</p>
+    </header>
+
+    <main>
+      <section class="card form-card">
+        <h2>Add Expense</h2>
+        <form action="{{ url_for('add') }}" method="post" class="form">
+          <label>
+            Name
+            <input type="text" name="name" placeholder="e.g. Maggi" maxlength="100">
+          </label>
+          <label>
+            Amount
+            <input type="number" name="amount" step="10" placeholder="e.g. 120.00" required>
+          </label>
+          <label>
+            Category
+            <select name="category">
+              {% for c in categories %}
+              <option value="{{ c }}">{{ c }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <div class="actions">
+            <button type="submit" class="btn">Add Expense</button>
+          </div>
+        </form>
+
+        <hr style="margin:14px 0; border-color: rgba(255,255,255,0.03)">
+
+        <h3>Set Monthly Budget</h3>
+        <form action="{{ url_for('set_budget') }}" method="post" style="display:flex;gap:8px;align-items:center;">
+          <input type="number" name="budget" step="0.01" value="{{ '{:.2f}'.format(budget) }}" style="padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;">
+          <button type="submit" class="btn btn-small">Save Budget</button>
+        </form>
+      </section>
+
+      <section class="card summary-card">
+        <h2>Summary</h2>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <div class="label">Budget</div>
+            <div class="value">Rs.{{ "{:.2f}".format(budget) }}</div>
+          </div>
+          <div class="summary-item">
+            <div class="label">Total Spent</div>
+            <div class="value">Rs.{{ "{:.2f}".format(total) }}</div>
+          </div>
+          <div class="summary-item">
+            <div class="label">Remaining</div>
+            <div class="value">Rs.{{ "{:.2f}".format(remaining) }}</div>
+          </div>
+          <div class="summary-item">
+            <div class="label">Budget / day</div>
+            <div class="value">Rs.{{ "{:.2f}".format(daily) }}</div>
+          </div>
+        </div>
+
+        <h3>By Category</h3>
+        <ul class="cat-list">
+          {% for k, v in by_cat.items() %}
+          <li><span class="cat">{{ k }}</span><span class="amt">Rs.{{ "{:.2f}".format(v) }}</span></li>
+          {% else %}
+          <li>No expenses yet</li>
+          {% endfor %}
+        </ul>
+
+        <h3>Recent</h3>
+        <table class="recent">
+          <thead><tr><th>#</th><th>Name</th><th>Amount</th><th>Category</th><th>Action</th></tr></thead>
+          <tbody>
+            {% for e in expenses %}
+            <tr>
+              <td>{{ loop.index0 }}</td>
+              <td>{{ e.name }}</td>
+              <td>{{ "{:.2f}".format(e.amount) }}</td>
+              <td>{{ e.category }}</td>
+              <td>
+                <form action="{{ url_for('delete', idx=loop.index0) }}" method="post" style="display:inline;">
+                  <button type="submit" class="btn btn-small btn-danger" onclick="return confirm('Delete this entry?');">Delete</button>
+                </form>
+              </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5">No records</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+    <footer>
+      <small>Developed By Anurag</small>
+    </footer>
+  </div>
+</body>
+</html>
